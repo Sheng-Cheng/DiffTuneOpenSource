@@ -1,0 +1,9 @@
+function [M, eR, eW] = attitude_control(R, W, ...
+    Rd, Wd, Wddot, k, J)
+
+eR = 1 / 2 * vee(Rd' * R - R' * Rd);
+eW = W - R' * Rd * Wd;
+M = - k.R .* eR ...
+    - k.W .* eW ...
+    + wedge(W) * (J * W) - J * (wedge(W) *R' *Rd * Wd - R' * Rd * Wddot);
+end
