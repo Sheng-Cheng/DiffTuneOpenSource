@@ -30,3 +30,9 @@
 *.exe
 *.out
 *.app
+
+# generated c code
+*.c
+
+# generated mex file
+*.mexw64
