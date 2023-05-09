@@ -105,6 +105,8 @@ grad_h_theta_fcn = Function('grad_h_theta_fcn',{X,desired,k,m,J},{grad_h_theta})
 % generate mex functions
 opts = struct('main', true,...
               'mex', true);
+
+mkdir mex
 cd('./mex');
 grad_f_X_fcn.generate('grad_f_X_fcn.c',opts);
 grad_f_u_fcn.generate('grad_f_u_fcn.c',opts);
