@@ -5,8 +5,13 @@ addpath('Common\');
 addpath('mex\');
 import casadi.*
 
-%% Simulation mode
+%% %% video options
 param.generateVideo = true;
+if param.generateVideo
+    video_obj = VideoWriter('video1.mp4','MPEG-4');
+    video_obj.FrameRate = 15;
+    open(video_obj);
+end
 
 %% Simulation parameters
 param.dt = 0.0025;
@@ -24,31 +29,26 @@ param.m = 4.34;
 
 param.g = 9.81;
 
-
 %% Initialize controller gains
 k.x = 16*ones(3,1);
 k.v = 5.6*ones(3,1);
 k.R = 8.81*ones(3,1);
 k.W = 2.54*ones(3,1);
 
-itr = 0;
-loss_prev = 1e6;
-
-if param.generateVideo
-    video_obj = VideoWriter('video1.mp4','MPEG-4');
-    video_obj.FrameRate = 15;
-    open(video_obj);
-end
-
+%% Initialize variables for DiffTune iterations
 learningRate = 0.001;
+totalIterations = 100;
+itr = 0;
 
 loss_history = [];
 rmse_history = [];
 param_hist = [];
 gradientUpdate = zeros(1,12);
+
+%% DiffTune iterations
 while 1
     itr = itr + 1;
-    %% Initial conditions
+    % load initial states
     p0 = [0, 0, 0]';
     v0 = [0, 0, 0]';
     R0 = eye(3);
@@ -56,18 +56,22 @@ while 1
 
     X_storage = [p0; v0; omega0; reshape(R0,9,1)];
     desiredPosition_storage = [];
-
+    
+    % initialize sensitivity
     dx_dtheta = zeros(18,12,N+1);
     du_dtheta = zeros(4,12,N);
-
+    
+    % initialize loss and gradient of loss
     loss = 0;
     theta_gradient = zeros(1,12);
-
+    
+    % initialize tracking errors
     e.x = zeros(3,N);
     e.v = zeros(3,N);
     e.R = zeros(3,N);
     e.W = zeros(3,N);
 
+    % count the time for sensitivity propagation
     duration = [];
 
     for i = 1:N
@@ -99,6 +103,8 @@ while 1
 
         % the loss is position tracking error norm square
         loss = loss + norm(err.x)^2;
+
+        % accumulating the gradient of loss wrt controller parameters
         theta_gradient = theta_gradient + 2*[err.x;zeros(15,1)]' * dx_dtheta(:,:,i);
 
         % integrate the ode dynamics
@@ -113,11 +119,10 @@ while 1
     fprintf('Iteration %d, current loss is %f (RMSE %f).\n',itr,loss,RMSE);
 
     % hard break
-    if itr>=100
+    if itr>=totalIterations
         break
     end
 
-    loss_prev = loss;
     loss_history = [loss_history; loss];
     rmse_history = [rmse_history; RMSE];
 
@@ -166,7 +171,6 @@ while 1
         figure(4001);
         set(gcf,'Position',[472 320 950 455]);
         set(gcf,'color','w');
-
 
         % x tracking
         subplot(3,3,[1,2]);
