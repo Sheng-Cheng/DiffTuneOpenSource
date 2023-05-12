@@ -5,10 +5,10 @@ addpath('Common\');
 addpath('mex\');
 import casadi.*
 
-%% %% video options
+%% video options
 param.generateVideo = true;
 if param.generateVideo
-    video_obj = VideoWriter('video1.mp4','MPEG-4');
+    video_obj = VideoWriter('quadrotor.mp4','MPEG-4');
     video_obj.FrameRate = 15;
     open(video_obj);
 end
@@ -166,60 +166,59 @@ while 1
     % store the parameters
     param_hist = [param_hist [k.x; k.v; k.R; k.W]];
 
+    set(gcf,'Position',[472 320 950 455]);
+    set(gcf,'color','w');
+
+    % x tracking
+    subplot(3,3,[1,2]);
+    plot(t,X_storage(1,1:end-1),'DisplayName','actual','LineWidth',1.5);
+    hold on;
+    plot(t,desiredPosition_storage(1,:),':','DisplayName','desired','LineWidth',1.5);
+    ylabel('x [m]');
+    grid on;
+    h_lgd = legend;
+    set(h_lgd,'Position',[0.3811 0.8099 0.1097 0.0846],'FontSize',10);
+    set(gca,'FontSize',10);
+
+    % y tracking
+    subplot(3,3,[4,5]);
+    plot(t,X_storage(2,1:end-1),'LineWidth',1.5);
+    hold on;
+    plot(t,desiredPosition_storage(2,:),':','LineWidth',1.5);
+    ylabel('y [m]');
+    grid on;
+    set(gca,'FontSize',10);
+
+    % z tracking
+    subplot(3,3,[7,8]);
+    plot(t,X_storage(3,1:end-1),'LineWidth',1.5);
+    hold on;
+    plot(t,desiredPosition_storage(3,:),':','LineWidth',1.5);
+    ylabel('z [m]');
+    xlabel('time [s]');
+    grid on;
+    set(gca,'FontSize',10);
+
+    % rmse
+    subplot(3,3,[3;6;9]);
+    plot(rmse_history,'LineWidth',1.5);
+    hold on;
+    grid on;
+    stem(length(rmse_history),rmse_history(end),'Color',[0 0.4470 0.7410]);
+
+    xlim([0 100]);
+    ylim([0 rmse_history(1)*1.1]);
+    text(50,0.3,['iteration = ' num2str(length(rmse_history))],'FontSize',12);
+    xlabel('iterations');
+    ylabel('RMSE [m]');
+    set(gca,'FontSize',10);
+    plotedit(gca,'on');
+    plotedit(gca,'off');
+
+    drawnow;
+    
     % visualization for movie
     if param.generateVideo
-        figure(4001);
-        set(gcf,'Position',[472 320 950 455]);
-        set(gcf,'color','w');
-
-        % x tracking
-        subplot(3,3,[1,2]);
-        plot(t,X_storage(1,1:end-1),'DisplayName','actual','LineWidth',1.5);
-        hold on;
-        plot(t,desiredPosition_storage(1,:),':','DisplayName','desired','LineWidth',1.5);
-        ylabel('x [m]');
-        grid on;
-        h_lgd = legend;
-        set(h_lgd,'Position',[0.3811 0.8099 0.1097 0.0846],'FontSize',10);
-        set(gca,'FontSize',10);
-
-        % y tracking
-        subplot(3,3,[4,5]);
-        plot(t,X_storage(2,1:end-1),'LineWidth',1.5);
-        hold on;
-        plot(t,desiredPosition_storage(2,:),':','LineWidth',1.5);
-        ylabel('y [m]');
-        grid on;
-        set(gca,'FontSize',10);
-
-        % z tracking
-        subplot(3,3,[7,8]);
-        plot(t,X_storage(3,1:end-1),'LineWidth',1.5);
-        hold on;
-        plot(t,desiredPosition_storage(3,:),':','LineWidth',1.5);
-        ylabel('z [m]');
-        xlabel('time [s]');
-        grid on;
-        set(gca,'FontSize',10);
-
-        % rmse
-        subplot(3,3,[3;6;9]);
-        plot(rmse_history,'LineWidth',1.5);
-        hold on;
-        grid on;
-        stem(length(rmse_history),rmse_history(end),'Color',[0 0.4470 0.7410]);
-
-        xlim([0 100]);
-        ylim([0 rmse_history(1)*1.1]);
-        text(50,0.3,['iteration = ' num2str(length(rmse_history))],'FontSize',12);
-        xlabel('iterations');
-        ylabel('RMSE [m]');
-        set(gca,'FontSize',10);
-        plotedit(gca,'on');
-        plotedit(gca,'off');
-
-        drawnow;
-
         frame = getframe(gcf);
         writeVideo(video_obj,frame);
         clf

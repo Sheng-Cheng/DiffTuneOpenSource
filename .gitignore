@@ -36,3 +36,6 @@
 
 # generated mex file
 *.mexw64
+
+# generated video
+*.mp4
