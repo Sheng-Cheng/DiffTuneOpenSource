@@ -16,7 +16,7 @@ Xref =  MX.sym('Xref',5);
 vd_dot = MX.sym('vd_dot',1);
 omegad_dot = MX.sym('omegad_dot',1);
 
-% phi is the parameter collection
+% theta is the parameter collection
 theta = MX.sym('theta',4);
 
 % control action
@@ -55,12 +55,6 @@ grad_f_X = jacobian(dynamics,X);
 grad_f_u = jacobian(dynamics,u);
 grad_h_X = jacobian(h,X);
 grad_h_theta = jacobian(h,theta);
-
-% function-lize the generated jacobians
-grad_f_X_fcn = Function('grad_f_X_fcn',{X,u,dt,m,J},{grad_f_X});
-grad_f_u_fcn = Function('grad_f_u_fcn',{X,u,dt,m,J},{grad_f_u});
-grad_h_X_fcn = Function('grad_h_X_fcn',{X,Xref,vd_dot,omegad_dot,m,J,theta},{grad_h_X});
-grad_h_theta_fcn = Function('grad_h_theta_fcn',{X,Xref,vd_dot,omegad_dot,m,J,theta},{grad_h_theta});
 
 % function-lize the generated jacobians
 grad_f_X_fcn = Function('grad_f_X_fcn',{X,u,dt,m,J},{grad_f_X});
