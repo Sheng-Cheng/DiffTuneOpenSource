@@ -1,6 +1,6 @@
 # DiffTune: Auto-Tuning through Auto-Differentiation
 
-This is a DiffTune toolset for controller auto-tuning using sensitivity propagation. This toolset is intended to facilitate users' DiffTune applications in two ways. First, it enables the automatic generation of the partial derivatives required for sensitivity propagation. In this way, a user only needs to specify the dynamics and controller, eliminating the need to manually provide partial derivatives. Second, we provide examples that demonstrate the applications of DiffTune and a template to ease the quick deployment to other applications. 
+This is a DiffTune toolset for controller auto-tuning using sensitivity propagation. This toolset is intended to facilitate users' DiffTune applications in two ways. First, it enables the automatic generation of the partial derivatives required for sensitivity propagation. In this way, a user only needs to specify the dynamics and controller, eliminating the need to manually provide partial derivatives. Second, we provide examples that demonstrate the applications of DiffTune and a template to facilitate quick deployment to other applications. 
 
 Details of the DiffTune can be found in:<br />
 [DiffTune: Auto-Tuning through Auto-Differentiation](https://arxiv.org/abs/2209.10021)<br />
