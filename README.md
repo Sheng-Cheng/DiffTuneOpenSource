@@ -10,15 +10,17 @@ If you think this toolset is helpful to your research/application, please cite:<
 ```
 @article{cheng2022difftune,
   title={DiffTune: Auto-Tuning through Auto-Differentiation},
-  author={Cheng, Sheng and Kim, Minkyung and Song, Lin and Wu, Zhuohuan and Wang, Shenlong and Hovakimyan, Naira},
-  journal={arXiv preprint arXiv:2209.10021},
-  year={2022}
+  author={Cheng, Sheng and Kim, Minkyung and Song, Lin and Yang, Chengyu and Jin, Yiquan and Wang, Shenlong and Hovakimyan, Naira},
+  journal={accepted for publication by IEEE Transactions on Robotics, arXiv preprint arXiv:2209.10021},
+  year={2024}
 }
-@article{cheng2023difftunePlus,
+@inproceedings{cheng2023difftunePlus,
   title={DiffTune+: Hyperparameter-Free Auto-Tuning using Auto-Differentiation},
   author={Cheng, Sheng and Song, Lin and Kim, Minkyung and Wang, Shenlong and Hovakimyan, Naira},
-  journal={accepted by 5th Annual Learning for Dynamics and Control Conference},
-  year={2023}
+  booktitle={Learning for Dynamics and Control Conference},
+  pages={170--183},
+  year={2023},
+  organization={PMLR}
 }
 ```
 
