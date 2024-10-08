@@ -3,9 +3,9 @@
 This is a DiffTune toolset for controller auto-tuning using sensitivity propagation. This toolset is intended to facilitate users' DiffTune applications in two ways. First, it enables the automatic generation of the partial derivatives required for sensitivity propagation. In this way, a user only needs to specify the dynamics and controller, eliminating the need to manually provide partial derivatives. Second, we provide examples that demonstrate the applications of DiffTune and a template to facilitate quick deployment to other applications. 
 
 Details of the DiffTune can be found in:<br />
-[DiffTune: Auto-Tuning through Auto-Differentiation](https://arxiv.org/abs/2209.10021)<br />
-[DiffTune+: Hyperparameter-Free Auto-Tuning using Auto-Differentiation](https://arxiv.org/abs/2212.03194)<br />
-[DiffTune-MPC: Closed-Loop Learning for Model Predictive Control](https://arxiv.org/abs/2312.11384) <br />
+[DiffTune: Auto-Tuning through Auto-Differentiation](https://ieeexplore.ieee.org/abstract/document/10599619)<br />
+[DiffTune+: Hyperparameter-Free Auto-Tuning using Auto-Differentiation](https://proceedings.mlr.press/v211/cheng23b)<br />
+[DiffTune-MPC: Closed-Loop Learning for Model Predictive Control](https://ieeexplore.ieee.org/abstract/document/10584257) <br />
 
 If you think this toolset is helpful to your research/application, please cite:<br />
 ```
@@ -48,7 +48,7 @@ https://github.com/Sheng-Cheng/DiffTuneOpenSource/assets/32967978/7713475d-a0d9-
 A template for the usage of DiffTune on custom systems and controllers is provided in ```/template```. Users are recommended to fill in the ```dynamics.m``` and ```controllers.m``` first and run the ```runDiffTune.m``` (with the DiffTune-related components commented out) to make sure the basic simulation can run as expected. The next step is to fill in the ```templateAutoGeneration.m``` with discretized dynamics and run this script to generate and compile the functions for online Jacobians evaluation. Once done, you should see ```*.mex``` and ```*.c``` files under the directory ```/template/mex```. Now, you can retain the commented-out sections in ```runDiffTune.m``` and run this script for your own DiffTune application.
 
 ## Implicitly differentiable model predictive controllers
-If your application involves a model predictive controller, you will then need special treatment to differentiate the solution from the model predictive controller. DiffTune's implementation is accessible in [DiffTune-MPC](https://github.com/RonaldTao/DiffTune-MPC). Details can be found in our paper [DiffTune-MPC: Closed-Loop Learning for Model Predictive Control](https://arxiv.org/abs/2312.11384).
+If your application involves a model predictive controller, you will then need special treatment to differentiate the solution from the model predictive controller. DiffTune's implementation is accessible in [DiffTune-MPC](https://github.com/RonaldTao/DiffTune-MPC). Details can be found in our paper [DiffTune-MPC: Closed-Loop Learning for Model Predictive Control](https://ieeexplore.ieee.org/abstract/document/10584257).
 
 ## Issues/Questions/Suggestions
 Feel free to open up an issue if you run into trouble. 
