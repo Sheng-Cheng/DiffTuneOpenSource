@@ -12,7 +12,7 @@ If you think this toolset is helpful to your research/application, please cite:<
 @article{cheng2022difftune,
   title={DiffTune: Auto-Tuning through Auto-Differentiation},
   author={Cheng, Sheng and Kim, Minkyung and Song, Lin and Yang, Chengyu and Jin, Yiquan and Wang, Shenlong and Hovakimyan, Naira},
-  journal={accepted for publication by IEEE Transactions on Robotics, arXiv preprint arXiv:2209.10021},
+  journal={IEEE Transactions on Robotics},
   year={2024}
 }
 @inproceedings{cheng2023difftunePlus,
